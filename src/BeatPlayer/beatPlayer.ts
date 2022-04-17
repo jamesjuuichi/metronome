@@ -1,11 +1,10 @@
-/*eslint @typescript-eslint/no-use-before-define: ["error", "nofunc"]*/
 import sound from "./sound.mp3";
 import { UNIVERSAL_MAX } from "../constants";
 
 const ONE_MINUTE = 60 * 1000;
 
 export function createMetronome() {
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const AudioContext = window.AudioContext;
 
   const metronomeSound = new Audio(sound);
   const audioContext = new AudioContext();
@@ -73,17 +72,15 @@ Beat: ${beatCount}
   }
 
   function playSound(gain: number | undefined | null) {
-    // if (isNumber(gain)) {
-    //   if (gain === 0) {
-    //     return;
-    //   } else {
-    //     gainNode.gain.value = gain / UNIVERSAL_MAX;
-    //   }
-    // } else {
-    //   gainNode.gain.value = 1;
-    // }
-    // gainNode.gain.value = 1;
-    // console.log("a", gainNode.gain.value);
+    if (isNumber(gain)) {
+      if (gain === 0) {
+        return;
+      } else {
+        gainNode.gain.value = gain / UNIVERSAL_MAX;
+      }
+    } else {
+      gainNode.gain.value = 1;
+    }
     metronomeSound.play();
   }
 

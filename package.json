@@ -9,10 +9,12 @@
   "main": "src/index.js",
   "dependencies": {
     "@types/react": "18.0.1",
+    "@types/react-dom": "^18.0.1",
     "classnames": "2.3.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-scripts": "4.0.0",
+    "react-scripts": "5.0.1",
+    "sass": "^1.50.0",
     "soundfont-player": "0.12.0"
   },
   "devDependencies": {

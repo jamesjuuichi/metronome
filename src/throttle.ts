@@ -14,7 +14,7 @@ export function throttle(fn: AnyFunction, interval: number = 100) {
       lastTime = now;
       fn(...args);
     } else {
-      timeoutId = setTimeout(() => {
+      timeoutId = window.setTimeout(() => {
         lastTime = now;
         fn(...args);
       }, interval - now + lastTime);

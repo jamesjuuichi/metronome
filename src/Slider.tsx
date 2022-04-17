@@ -1,5 +1,3 @@
-/*eslint @typescript-eslint/no-use-before-define: ["error", "nofunc"]*/
-
 import React, { useRef, useEffect, memo } from "react";
 import cx from "classnames";
 import { UNIVERSAL_MAX, UNIVERSAL_MIN } from "./constants";
@@ -52,7 +50,7 @@ function useSliderInteraction(
   max: number,
   orientation: SLIDER_ORIENTATION
 ) {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!ref.current) {

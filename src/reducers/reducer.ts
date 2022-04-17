@@ -1,4 +1,3 @@
-/*eslint @typescript-eslint/no-use-before-define: ["error", "nofunc"]*/
 import {
   BPM_MIN,
   BPM_MAX,

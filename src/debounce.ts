@@ -6,7 +6,7 @@ export function debounce(fn: AnyFunction, delay: number = 200) {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(() => {
+    timeoutId = window.setTimeout(() => {
       fn(...args);
     }, delay);
   };

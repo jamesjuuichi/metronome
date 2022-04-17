@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext } from "react";
 import { ReducerContext } from "../reducers/context";
 
 import GridElement from "../GridElement";
