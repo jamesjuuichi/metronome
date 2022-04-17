@@ -5,6 +5,7 @@ import { ReducerContext } from './reducers/context';
 import Controller from './Controller';
 
 import './styles.css';
+import Background from './Background';
 
 export default function App() {
   const [state, dispatch] = useReducer(metronomeReducer, initialState);
@@ -15,6 +16,7 @@ export default function App() {
         dispatch: dispatch,
       }}
     >
+      <Background />
       <Controller />
     </ReducerContext.Provider>
   );
