@@ -1,0 +1,44 @@
+$grid-size: 32px;
+$grid-gap: 2px;
+$column-count: 16;
+$padding: 4px;
+
+.controller {
+  grid-template-columns: repeat($column-count, #{$grid-size / 2});
+  grid-template-rows: repeat(4, #{$grid-size});
+  grid-gap: $grid-gap;
+  background-color: var(--secondary-background);
+  padding: $padding;
+  width: $column-count * $grid-size / 2 + ($column-count - 1) * $grid-gap + $padding * 2;
+}
+
+.button {
+  border: none;
+  background-color: var(--forth-background);
+  color: var(--primary);
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  &:hover {
+    background-color: var(--third-background);
+    cursor: pointer;
+  }
+  &[disabled] {
+    background-color: var(--disabled-background);
+    &:hover {
+      background-color: var(--disabled-background);
+      cursor: default;
+    }
+  }
+}
+.overlayingText {
+  color: var(--primary);
+  line-height: $grid-size;
+  text-align: center;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
