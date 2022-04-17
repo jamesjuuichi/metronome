@@ -1,19 +1,21 @@
 import sound from './sound.mp3';
-import { UNIVERSAL_MAX } from '../../constants';
+import { BPM_MAX, UNIVERSAL_MAX } from '../../constants';
 import { loadSample } from './audioLoader';
 
 const ONE_MINUTE = 60 * 1000;
-const PLAYBACK_RATE_RANGE = [-2, -1, 0, 1, 2, 3];
+const PLAYBACK_RATE_RANGE = [-2, 0, 2, 4, 6, 8];
+
+export type Subscriber = (
+  beatIndex: number | null,
+  isValidMeasure: boolean
+) => void;
 
 export function createMetronome() {
-  const AudioContext = window.AudioContext;
-
-  const audioContext = new AudioContext();
-
-  let audioBuffer: AudioBuffer | null = null;
+  const audioContext = new window.AudioContext();
   const gainNode: GainNode = audioContext.createGain();
   gainNode.connect(audioContext.destination);
 
+  let audioBuffer: AudioBuffer | null = null;
   async function prepare() {
     audioBuffer = await loadSample(sound, audioContext);
   }
@@ -23,15 +25,43 @@ export function createMetronome() {
   let bpm: number | null = null;
   let beatCount: number | null = null;
   let pattern: number[] | null = null;
+  let isValidMeasure = true;
+  const subscribers: Set<Subscriber> = new Set<Subscriber>();
+
+  function setBpm(newBpm: number) {
+    bpm = newBpm;
+    isValidMeasure = false;
+  }
+  function setBeatCount(newBeatCount: number) {
+    beatCount = newBeatCount;
+    isValidMeasure = false;
+  }
+  function setBeatPattern(newPattern: number[]) {
+    pattern = newPattern;
+    isValidMeasure = false;
+  }
+  function subscribe(fn: Subscriber) {
+    subscribers.add(fn);
+    return () => {
+      subscribers.delete(fn);
+    };
+  }
+  function notifySubscribers(beatIndex: number | null) {
+    subscribers.forEach((subscriber) => {
+      subscriber(beatIndex, isValidMeasure);
+    });
+  }
+
   function play() {
     if (!audioBuffer) {
       console.log('Loading in progress');
+      return;
     }
     if (isPlaying) {
       return;
     }
     isPlaying = true;
-    scheduleNextBar();
+    scheduleNextMeasure();
   }
   function stop() {
     if (!isPlaying) {
@@ -39,8 +69,10 @@ export function createMetronome() {
     }
     isPlaying = false;
   }
-  function scheduleNextBar() {
+
+  function scheduleNextMeasure() {
     if (!isPlaying) {
+      notifySubscribers(null);
       return;
     }
     if (!isNumber(bpm) || !isNumber(beatCount)) {
@@ -52,35 +84,24 @@ Beat: ${beatCount}
       isPlaying = false;
       return;
     }
-
-    scheduleBeatsInBar(bpm, beatCount, pattern);
+    scheduleBeatsInMeasure(bpm, beatCount, pattern);
   }
-
-  function scheduleBeatsInBar(
+  function scheduleBeatsInMeasure(
     bpm: number,
     beatCount: number,
     pattern: number[] | null
   ) {
+    isValidMeasure = true;
     const pace = ONE_MINUTE / bpm;
 
-    playSound(pattern?.[0]);
+    playSound(0, pattern?.[0]);
     for (let i = 1; i < beatCount; ++i) {
-      setTimeout(() => playSound(pattern?.[i]), pace * i);
+      setTimeout(() => playSound(i, pattern?.[i]), pace * i);
     }
-    setTimeout(scheduleNextBar, pace * beatCount);
+    setTimeout(scheduleNextMeasure, pace * beatCount);
   }
 
-  function setBpm(newBpm: number) {
-    bpm = newBpm;
-  }
-  function setBeatCount(newBeatCount: number) {
-    beatCount = newBeatCount;
-  }
-  function setBeatPattern(newPattern: number[]) {
-    pattern = newPattern;
-  }
-
-  function playSound(gain: number | undefined | null) {
+  function playSound(index: number, gain: number | undefined | null) {
     if (!audioBuffer) {
       return;
     }
@@ -102,9 +123,10 @@ Beat: ${beatCount}
       gainNode.gain.value = 1;
     }
     metronomeSound.start(0);
+    notifySubscribers(index);
     setTimeout(() => {
       metronomeSound.disconnect();
-    }, 80);
+    }, ONE_MINUTE / (BPM_MAX + 1));
   }
 
   return {
@@ -113,6 +135,7 @@ Beat: ${beatCount}
     setBpm,
     setBeatCount,
     setBeatPattern,
+    subscribe,
   };
 }
 

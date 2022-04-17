@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import GridElement from '../../GridElement';
-import { ReducerContext } from '../../reducers/context';
+import CurrentBeatIndicator from './CurrentBeatIndicator';
+
 import { createMetronome } from './beatPlayer';
+import { ReducerContext } from '../../reducers/context';
 
 import style from '../style.module.scss';
 
@@ -31,14 +33,19 @@ export default function BeatPlayer() {
     } else {
       beatPlayer.current.stop();
     }
-    // beatPlayer.current.playOnce();
   }, [isPlaying]);
 
   return (
-    <GridElement rowStart={6} colSpan={16}>
-      <button className={style.button} onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? 'Pause' : 'Play'}
-      </button>
-    </GridElement>
+    <>
+      <CurrentBeatIndicator subscribe={beatPlayer.current.subscribe} />
+      <GridElement rowStart={6} colSpan={16}>
+        <button
+          className={style.button}
+          onClick={() => setIsPlaying(!isPlaying)}
+        >
+          {isPlaying ? 'Pause' : 'Play'}
+        </button>
+      </GridElement>
+    </>
   );
 }
