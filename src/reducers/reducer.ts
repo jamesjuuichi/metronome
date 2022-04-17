@@ -6,8 +6,8 @@ import {
   BEAT_MIN,
   BEAT_MAX,
   INIT_BEAT,
-  INIT_BPM
-} from "../constants";
+  INIT_BPM,
+} from '../constants';
 export type MetronomeState = {
   bpm: number;
   beats: number;
@@ -20,7 +20,7 @@ export enum ACTIONS {
   INCREASE_BEAT_COUNT,
   DECREASE_BEAT_COUNT,
   MODIFY_BEAT_COUNT,
-  MODIFY_PATTERN
+  MODIFY_PATTERN,
 }
 
 export type IncreaseBpmAction = {
@@ -61,7 +61,7 @@ export type ActionType =
 export const initialState: MetronomeState = {
   bpm: INIT_BPM,
   beats: INIT_BEAT,
-  pattern: [100, 100, 100, 100]
+  pattern: [100, 100, 100, 100],
 };
 
 export function reducer(
@@ -72,12 +72,12 @@ export function reducer(
     case ACTIONS.INCREASE_BPM:
       return {
         ...state,
-        bpm: legalizeRange(state.bpm + 1, BPM_MIN, BPM_MAX)
+        bpm: legalizeRange(state.bpm + 1, BPM_MIN, BPM_MAX),
       };
     case ACTIONS.DECREASE_BPM:
       return {
         ...state,
-        bpm: legalizeRange(state.bpm - 1, BPM_MIN, BPM_MAX)
+        bpm: legalizeRange(state.bpm - 1, BPM_MIN, BPM_MAX),
       };
     case ACTIONS.MODIFY_BPM:
       return modifyBpmHandler(state, action);
@@ -98,7 +98,7 @@ function decreaseBeatCount(state: MetronomeState): MetronomeState {
   return {
     ...state,
     beats: legalizeRange(state.beats - 1, BEAT_MIN, BEAT_MAX),
-    pattern: newPattern
+    pattern: newPattern,
   };
 }
 function increaseBeatCount(state: MetronomeState): MetronomeState {
@@ -107,7 +107,7 @@ function increaseBeatCount(state: MetronomeState): MetronomeState {
   return {
     ...state,
     beats: legalizeRange(state.beats + 1, BEAT_MIN, BEAT_MAX),
-    pattern: newPattern
+    pattern: newPattern,
   };
 }
 
@@ -130,7 +130,7 @@ function modifyBeatHandler(
   return {
     ...state,
     beats: legalizeRange(action.value, BEAT_MIN, BEAT_MAX),
-    pattern: newPattern
+    pattern: newPattern,
   };
 }
 
@@ -143,7 +143,7 @@ function modifyBpmHandler(
   }
   return {
     ...state,
-    bpm: legalizeRange(action.value, BPM_MIN, BPM_MAX)
+    bpm: legalizeRange(action.value, BPM_MIN, BPM_MAX),
   };
 }
 
@@ -161,7 +161,7 @@ function modifyPatternHandler(
   newPattern[action.index] = legalizeRange(action.value);
   return {
     ...state,
-    pattern: newPattern
+    pattern: newPattern,
   };
 }
 

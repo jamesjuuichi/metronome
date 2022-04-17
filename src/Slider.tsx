@@ -1,13 +1,13 @@
-import React, { useRef, useEffect, memo } from "react";
-import cx from "classnames";
-import { UNIVERSAL_MAX, UNIVERSAL_MIN } from "./constants";
-import { throttle } from "./throttle";
+import React, { useRef, useEffect, memo } from 'react';
+import cx from 'classnames';
+import { UNIVERSAL_MAX, UNIVERSAL_MIN } from './constants';
+import { throttle } from './throttle';
 
-import style from "./Slider.module.scss";
+import style from './Slider.module.scss';
 
 export enum SLIDER_ORIENTATION {
   VERTICAL,
-  HORIZONTAL
+  HORIZONTAL,
 }
 
 type Props = {
@@ -24,7 +24,7 @@ function SynthesizedSlider({
   min = UNIVERSAL_MIN,
   max = UNIVERSAL_MAX,
   orientation = SLIDER_ORIENTATION.HORIZONTAL,
-  reportValue
+  reportValue,
 }: Props) {
   const fillerStyle = useFillerStyle(value, min, max, orientation);
   const ref = useSliderInteraction(reportValue, min, max, orientation);
@@ -103,16 +103,16 @@ function useSliderInteraction(
       getMousePosition(e);
     }
 
-    currentRef.addEventListener("mousedown", mouseDownEvent);
-    currentRef.addEventListener("mousemove", mouseMoveEvent);
-    currentRef.addEventListener("mouseup", mouseUpEvent);
-    currentRef.addEventListener("mouseleave", mouseUpEvent);
+    currentRef.addEventListener('mousedown', mouseDownEvent);
+    currentRef.addEventListener('mousemove', mouseMoveEvent);
+    currentRef.addEventListener('mouseup', mouseUpEvent);
+    currentRef.addEventListener('mouseleave', mouseUpEvent);
 
     return () => {
-      currentRef.removeEventListener("mousedown", mouseDownEvent);
-      currentRef.removeEventListener("mousemove", mouseMoveEvent);
-      currentRef.removeEventListener("mouseup", mouseUpEvent);
-      currentRef.removeEventListener("mouseleave", mouseUpEvent);
+      currentRef.removeEventListener('mousedown', mouseDownEvent);
+      currentRef.removeEventListener('mousemove', mouseMoveEvent);
+      currentRef.removeEventListener('mouseup', mouseUpEvent);
+      currentRef.removeEventListener('mouseleave', mouseUpEvent);
     };
   }, [min, max, orientation, reportValue]);
 
@@ -128,11 +128,11 @@ function useFillerStyle(
   const percentage = toPercentageValue(value, min, max);
   if (orientation === SLIDER_ORIENTATION.HORIZONTAL) {
     return {
-      width: `${percentage}%`
+      width: `${percentage}%`,
     };
   }
   return {
-    height: `${percentage}%`
+    height: `${percentage}%`,
   };
 }
 

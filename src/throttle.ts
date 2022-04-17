@@ -1,6 +1,6 @@
-import type { AnyFunction } from "./types";
+import type { AnyFunction } from './types';
 
-export function throttle(fn: AnyFunction, interval: number = 100) {
+export function throttle(fn: AnyFunction, interval = 100) {
   let lastTime = 0;
   let timeoutId: number | null = null;
   return (...args: any[]) => {

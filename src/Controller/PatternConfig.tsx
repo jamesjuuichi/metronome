@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { ReducerContext } from "../reducers/context";
+import React, { useContext } from 'react';
+import { ReducerContext } from '../reducers/context';
 
-import GridElement from "../GridElement";
+import GridElement from '../GridElement';
 
-import PerBeatConfig from "./PerBeatConfig";
+import PerBeatConfig from './PerBeatConfig';
 
 export default function PatternConfig() {
   const { state } = useContext(ReducerContext);

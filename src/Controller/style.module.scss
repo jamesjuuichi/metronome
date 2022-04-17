@@ -9,7 +9,8 @@ $padding: 4px;
   grid-gap: $grid-gap;
   background-color: var(--secondary-background);
   padding: $padding;
-  width: $column-count * $grid-size / 2 + ($column-count - 1) * $grid-gap + $padding * 2;
+  width: $column-count * $grid-size / 2 + ($column-count - 1) * $grid-gap +
+    $padding * 2;
 }
 
 .button {

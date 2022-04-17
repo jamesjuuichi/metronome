@@ -1,9 +1,9 @@
-import React, { useContext, useCallback } from "react";
-import { ReducerContext } from "../reducers/context";
-import { UNIVERSAL_MAX, UNIVERSAL_MIN } from "../constants";
-import { ACTIONS } from "../reducers/reducer";
+import React, { useContext, useCallback } from 'react';
+import { ReducerContext } from '../reducers/context';
+import { UNIVERSAL_MAX, UNIVERSAL_MIN } from '../constants';
+import { ACTIONS } from '../reducers/reducer';
 
-import Slider, { SLIDER_ORIENTATION } from "../Slider";
+import Slider, { SLIDER_ORIENTATION } from '../Slider';
 
 type Props = {
   value: number;

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import GridElement from "../../GridElement";
-import { ReducerContext } from "../../reducers/context";
-import { createMetronome } from "./beatPlayer";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import GridElement from '../../GridElement';
+import { ReducerContext } from '../../reducers/context';
+import { createMetronome } from './beatPlayer';
 
 import style from '../style.module.scss';
 
@@ -36,10 +36,8 @@ export default function BeatPlayer() {
 
   return (
     <GridElement rowStart={6} colSpan={16}>
-      <button
-        className={style.button}
-        onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? "Pause" : "Play"}
+      <button className={style.button} onClick={() => setIsPlaying(!isPlaying)}>
+        {isPlaying ? 'Pause' : 'Play'}
       </button>
     </GridElement>
   );

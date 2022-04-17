@@ -1,7 +1,7 @@
-import React from "react";
-import cx from "classnames";
+import React from 'react';
+import cx from 'classnames';
 
-import style from "./GridElement.module.css";
+import style from './GridElement.module.css';
 
 type GridElementType = {
   colStart?: number;
@@ -18,7 +18,7 @@ export default function GridElement({
   rowStart = 1,
   rowSpan = 1,
   className,
-  children
+  children,
 }: GridElementType) {
   return (
     <div
@@ -26,7 +26,7 @@ export default function GridElement({
         gridRowStart: rowStart,
         gridRowEnd: rowStart + rowSpan,
         gridColumnStart: colStart,
-        gridColumnEnd: colStart + colSpan
+        gridColumnEnd: colStart + colSpan,
       }}
       className={cx(style.relativeBox, className)}
     >

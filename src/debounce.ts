@@ -1,6 +1,6 @@
-import type { AnyFunction } from "./types";
+import type { AnyFunction } from './types';
 
-export function debounce(fn: AnyFunction, delay: number = 200) {
+export function debounce(fn: AnyFunction, delay = 200) {
   let timeoutId: number | null = null;
   return (...args: any[]) => {
     if (timeoutId) {

@@ -1,6 +1,6 @@
-import sound from "./sound.mp3";
-import { UNIVERSAL_MAX } from "../../constants";
-import { loadSample } from "./audioLoader";
+import sound from './sound.mp3';
+import { UNIVERSAL_MAX } from '../../constants';
+import { loadSample } from './audioLoader';
 
 const ONE_MINUTE = 60 * 1000;
 const PLAYBACK_RATE_RANGE = [-2, -1, 0, 1, 2, 3];
@@ -8,11 +8,10 @@ const PLAYBACK_RATE_RANGE = [-2, -1, 0, 1, 2, 3];
 export function createMetronome() {
   const AudioContext = window.AudioContext;
 
-
   const audioContext = new AudioContext();
 
   let audioBuffer: AudioBuffer | null = null;
-  const gainNode: GainNode = audioContext.createGain();;
+  const gainNode: GainNode = audioContext.createGain();
   gainNode.connect(audioContext.destination);
 
   async function prepare() {
@@ -94,8 +93,11 @@ Beat: ${beatCount}
     metronomeSound.connect(gainNode);
 
     if (isNumber(gain)) {
-        metronomeSound.playbackRate.value = 2 ** (Math.floor(gain / (UNIVERSAL_MAX / PLAYBACK_RATE_RANGE.length - 1)) / 12);
-        gainNode.gain.value = gain / UNIVERSAL_MAX;
+      metronomeSound.playbackRate.value =
+        2 **
+        (Math.floor(gain / (UNIVERSAL_MAX / PLAYBACK_RATE_RANGE.length - 1)) /
+          12);
+      gainNode.gain.value = gain / UNIVERSAL_MAX;
     } else {
       gainNode.gain.value = 1;
     }
@@ -110,7 +112,7 @@ Beat: ${beatCount}
     stop,
     setBpm,
     setBeatCount,
-    setBeatPattern
+    setBeatPattern,
   };
 }
 

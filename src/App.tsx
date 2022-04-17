@@ -1,10 +1,10 @@
-import React, { useReducer } from "react";
-import { initialState, reducer as metronomeReducer } from "./reducers/reducer";
-import { ReducerContext } from "./reducers/context";
+import React, { useReducer } from 'react';
+import { initialState, reducer as metronomeReducer } from './reducers/reducer';
+import { ReducerContext } from './reducers/context';
 
-import Controller from "./Controller";
+import Controller from './Controller';
 
-import "./styles.css";
+import './styles.css';
 
 export default function App() {
   const [state, dispatch] = useReducer(metronomeReducer, initialState);
@@ -12,7 +12,7 @@ export default function App() {
     <ReducerContext.Provider
       value={{
         state: state,
-        dispatch: dispatch
+        dispatch: dispatch,
       }}
     >
       <Controller />

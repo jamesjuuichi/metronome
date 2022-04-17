@@ -1,10 +1,10 @@
-import React from "react";
-import cx from "classnames";
-import style from "./Grid.module.css";
+import React from 'react';
+import cx from 'classnames';
+import style from './Grid.module.css';
 
 export default function Grid({
   children,
-  className
+  className,
 }: {
   children: React.ReactNode;
   className?: string;

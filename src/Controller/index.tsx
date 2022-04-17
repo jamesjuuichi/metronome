@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import Grid from "../Grid";
-import BpmConfig from "./BpmConfig";
-import BeatConfig from "./BeatConfig";
-import PatternConfig from "./PatternConfig";
-import BeatPlayer from "./BeatPlayer";
+import Grid from '../Grid';
+import BpmConfig from './BpmConfig';
+import BeatConfig from './BeatConfig';
+import PatternConfig from './PatternConfig';
+import BeatPlayer from './BeatPlayer';
 
-import style from "./style.module.scss";
+import style from './style.module.scss';
 
 export default function Controller() {
   return (

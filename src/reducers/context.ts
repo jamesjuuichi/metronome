@@ -1,7 +1,8 @@
-import { createContext, Dispatch } from "react";
-import { ActionType, initialState, MetronomeState } from "./reducer";
+import { createContext, Dispatch } from 'react';
+import { ActionType, initialState, MetronomeState } from './reducer';
 
-function noopDispatch(action: ActionType) {}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+function noopDispatch(_action: ActionType) {}
 
 type ReducerContextType = {
   state: MetronomeState;
@@ -10,5 +11,5 @@ type ReducerContextType = {
 
 export const ReducerContext = createContext<ReducerContextType>({
   state: initialState,
-  dispatch: noopDispatch
+  dispatch: noopDispatch,
 });

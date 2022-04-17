@@ -1,13 +1,13 @@
-import React, { useContext, useCallback } from "react";
-import { ReducerContext } from "../reducers/context";
+import React, { useContext, useCallback } from 'react';
+import { ReducerContext } from '../reducers/context';
 
-import { BPM_MAX, BPM_MIN } from "../constants";
-import { ACTIONS } from "../reducers/reducer";
+import { BPM_MAX, BPM_MIN } from '../constants';
+import { ACTIONS } from '../reducers/reducer';
 
-import GridElement from "../GridElement";
-import Slider from "../Slider";
+import GridElement from '../GridElement';
+import Slider from '../Slider';
 
-import style from "./style.module.scss";
+import style from './style.module.scss';
 
 export default function BpmConfig() {
   const { state, dispatch } = useContext(ReducerContext);
