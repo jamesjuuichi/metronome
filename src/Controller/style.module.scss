@@ -5,7 +5,7 @@ $padding: 4px;
 
 .controller {
   grid-template-columns: repeat($column-count, #{$grid-size / 2});
-  grid-template-rows: repeat(4, #{$grid-size});
+  grid-template-rows: repeat(4, #{$grid-size}) ($grid-size / 2) $grid-size;
   grid-gap: $grid-gap;
   background-color: var(--secondary-background);
   padding: $padding;

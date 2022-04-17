@@ -1,11 +1,11 @@
 :root {
   --background: #101010;
-  --secondary-background: #181818;
-  --third-background: #202020;
-  --forth-background: #282828;
-  --fifth-background: #303030;
-  --sixth-background: #383838;
-  --disabled-background: #404040;
+  --secondary-background: #202020;
+  --third-background: #303030;
+  --forth-background: #404040;
+  --fifth-background: #484848;
+  --sixth-background: #505050;
+  --disabled-background: #606060;
   --primary: #eee;
 }
 
