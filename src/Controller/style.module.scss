@@ -54,7 +54,7 @@ $padding: 4px;
   grid-gap: $grid-gap;
   background-color: var(--secondary-background);
   padding: $padding;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
