@@ -60,7 +60,16 @@ function useSliderInteraction(
 
     let isMouseDown = false;
 
-    const getMousePosition = throttle((e: MouseEvent) => {
+    const getMousePosition = throttle((e: MouseEvent | TouchEvent) => {
+      let clientX = 0;
+      let clientY = 0;
+      if ('changedTouches' in e) {
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
       /**
        * NOTE: If you want to optimize this, like getBoundingClientRect once
        * on every keydown, then make sure you blocked the scrolling, since getBoundingClientRect gets
@@ -68,35 +77,40 @@ function useSliderInteraction(
        */
       const boundingRect = currentRef.getBoundingClientRect();
       if (orientation === SLIDER_ORIENTATION.HORIZONTAL) {
-        const offSetX = e.clientX - boundingRect.x + 1;
+        const offSetX = clientX - boundingRect.x + 1;
         reportValue(
-          Math.round(
-            toRelativeValue(offSetX, 0, boundingRect.width) * (max - min + 1)
-          )
+          min +
+            Math.round(
+              toRelativeValue(offSetX, 0, boundingRect.width) * (max - min)
+            )
         );
       } else {
-        const offSetY = e.clientY - boundingRect.y + 1;
+        const offSetY = clientY - boundingRect.y + 1;
         reportValue(
-          Math.round(
-            toRelativeValue(
-              boundingRect.height - offSetY,
-              0,
-              boundingRect.height
-            ) *
-              (max - min + 1)
-          )
+          min +
+            Math.round(
+              toRelativeValue(
+                boundingRect.height - offSetY,
+                0,
+                boundingRect.height
+              ) *
+                (max - min)
+            )
         );
       }
     }, 50);
 
     function mouseDownEvent(e: MouseEvent) {
+      e.preventDefault();
       isMouseDown = true;
       getMousePosition(e);
     }
     function mouseUpEvent(e: MouseEvent) {
+      e.preventDefault();
       isMouseDown = false;
     }
     function mouseMoveEvent(e: MouseEvent) {
+      e.preventDefault();
       if (!isMouseDown) {
         return;
       }
@@ -104,15 +118,19 @@ function useSliderInteraction(
     }
 
     currentRef.addEventListener('mousedown', mouseDownEvent);
-    currentRef.addEventListener('mousemove', mouseMoveEvent);
-    currentRef.addEventListener('mouseup', mouseUpEvent);
-    currentRef.addEventListener('mouseleave', mouseUpEvent);
+    currentRef.addEventListener('touchstart', mouseDownEvent);
+    window.addEventListener('mousemove', mouseMoveEvent);
+    window.addEventListener('touchmove', mouseMoveEvent);
+    window.addEventListener('touchend', mouseUpEvent);
+    window.addEventListener('mouseup', mouseUpEvent);
 
     return () => {
       currentRef.removeEventListener('mousedown', mouseDownEvent);
-      currentRef.removeEventListener('mousemove', mouseMoveEvent);
-      currentRef.removeEventListener('mouseup', mouseUpEvent);
-      currentRef.removeEventListener('mouseleave', mouseUpEvent);
+      currentRef.removeEventListener('touchstart', mouseDownEvent);
+      window.removeEventListener('mousemove', mouseMoveEvent);
+      window.removeEventListener('touchmove', mouseMoveEvent);
+      window.removeEventListener('touchend', mouseUpEvent);
+      window.removeEventListener('mouseup', mouseUpEvent);
     };
   }, [min, max, orientation, reportValue]);
 

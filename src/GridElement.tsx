@@ -8,6 +8,7 @@ type GridElementType = {
   colSpan?: number;
   rowStart?: number;
   rowSpan?: number;
+  skipStyling?: boolean;
   className?: string;
   children?: React.ReactNode;
 };
@@ -17,19 +18,20 @@ export default function GridElement({
   colSpan = 1,
   rowStart = 1,
   rowSpan = 1,
+  skipStyling = false,
   className,
   children,
 }: GridElementType) {
-  return (
-    <div
-      style={{
+  const styling = skipStyling
+    ? {}
+    : {
         gridRowStart: rowStart,
         gridRowEnd: rowStart + rowSpan,
         gridColumnStart: colStart,
         gridColumnEnd: colStart + colSpan,
-      }}
-      className={cx(style.relativeBox, className)}
-    >
+      };
+  return (
+    <div style={styling} className={cx(style.relativeBox, className)}>
       {children}
     </div>
   );

@@ -1,21 +1,95 @@
-$grid-size: 32px;
-$grid-gap: 2px;
+$grid-size: 64px;
+$grid-gap: 4px;
 $column-count: 16;
 $padding: 4px;
 
+@function repeatString($character, $n) {
+  $c: $character;
+  @for $i from 2 through $n {
+    $c: $c + ' ' + $character;
+  }
+  @return $c;
+}
+
+.template {
+  grid-template-areas:
+    repeatString('play', 16)
+    "#{repeatString('decbpm', 2)} #{repeatString('rangebpm', 4)} #{repeatString('incbpm', 2)} #{repeatString('decbeat', 2)} #{repeatString('rangebeat', 4)} #{repeatString('incbeat', 2)}"'b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 b11 b12 b13 b14 b15 b16''i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 i11 i12 i13 i14 i15 i16';
+  grid-template-columns: repeat(16, $grid-size / 2);
+  grid-template-rows: $grid-size $grid-size #{$grid-size * 3} #{$grid-size / 2};
+}
+.playButton {
+  grid-area: play;
+}
+.decreaseBpm {
+  grid-area: decbpm;
+}
+.increaseBpm {
+  grid-area: incbpm;
+}
+.rangeBpm {
+  grid-area: rangebpm;
+}
+.decreaseBeat {
+  grid-area: decbeat;
+}
+.increaseBeat {
+  grid-area: incbeat;
+}
+.rangeBeat {
+  grid-area: rangebeat;
+}
+@mixin progressClass($prefix, $areaPrefix, $start, $end) {
+  @for $i from $start through $end {
+    #{$prefix}#{$i} {
+      grid-area: #{$areaPrefix}#{$i};
+    }
+  }
+}
+
+@include progressClass('.beat', 'b', 1, 16);
+@include progressClass('.indicator', 'i', 1, 16);
+
 .controller {
-  grid-template-columns: repeat($column-count, #{$grid-size / 2});
-  grid-template-rows: repeat(4, #{$grid-size}) ($grid-size / 2) $grid-size;
   grid-gap: $grid-gap;
   background-color: var(--secondary-background);
   padding: $padding;
-  width: $column-count * $grid-size / 2 + ($column-count - 1) * $grid-gap +
-    $padding * 2;
-
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 571px) {
+  .template {
+    grid-template-areas:
+      repeatString('play', 8)
+      "#{repeatString('decbpm', 2)} #{repeatString('rangebpm', 4)} #{repeatString('incbpm', 2)}""#{repeatString('decbeat', 2)} #{repeatString('rangebeat', 4)} #{repeatString('incbeat', 2)}"'b1 b2 b3 b4 b5 b6 b7 b8' 'i1 i2 i3 i4 i5 i6 i7 i8'
+      'b9 b10 b11 b12 b13 b14 b15 b16' 'i9 i10 i11 i12 i13 i14 i15 i16';
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 3fr 0.5fr 3fr 0.5fr;
+  }
+  .controller {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+  .container {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 320px;
+    width: 100%;
+  }
+  .scaler {
+    position: absolute;
+    width: 100%;
+    padding-top: 250%;
+  }
 }
 
 .button {
@@ -40,11 +114,13 @@ $padding: 4px;
 .overlayingText {
   color: var(--primary);
   line-height: $grid-size;
-  text-align: center;
   pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

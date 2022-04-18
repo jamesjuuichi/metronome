@@ -19,7 +19,7 @@ export default function BeatConfig() {
   }, [dispatch]);
   return (
     <>
-      <GridElement colStart={9} colSpan={2}>
+      <GridElement className={style.decreaseBeat} skipStyling={true}>
         <button
           onClick={decreaseBeat}
           className={style.button}
@@ -28,7 +28,7 @@ export default function BeatConfig() {
           -
         </button>
       </GridElement>
-      <GridElement colStart={11} colSpan={4}>
+      <GridElement className={style.rangeBeat} skipStyling={true}>
         <Slider
           value={state.beats}
           min={BEAT_MIN}
@@ -37,7 +37,7 @@ export default function BeatConfig() {
         />
         <div className={style.overlayingText}>{state.beats}</div>
       </GridElement>
-      <GridElement colStart={15} colSpan={2}>
+      <GridElement className={style.increaseBeat} skipStyling={true}>
         <button
           onClick={increaseBeat}
           className={style.button}

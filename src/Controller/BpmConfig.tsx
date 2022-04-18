@@ -27,7 +27,7 @@ export default function BpmConfig() {
 
   return (
     <>
-      <GridElement colSpan={2}>
+      <GridElement className={style.decreaseBpm} skipStyling={true}>
         <button
           onClick={decreaseBpm}
           className={style.button}
@@ -36,7 +36,7 @@ export default function BpmConfig() {
           -
         </button>
       </GridElement>
-      <GridElement colStart={3} colSpan={4}>
+      <GridElement className={style.rangeBpm} skipStyling={true}>
         <Slider
           value={state.bpm}
           min={BPM_MIN}
@@ -45,7 +45,7 @@ export default function BpmConfig() {
         />
         <div className={style.overlayingText}>{state.bpm}</div>
       </GridElement>
-      <GridElement colStart={7} colSpan={2}>
+      <GridElement className={style.increaseBpm} skipStyling={true}>
         <button
           onClick={increaseBpm}
           className={style.button}

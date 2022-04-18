@@ -38,7 +38,7 @@ export default function BeatPlayer() {
   return (
     <>
       <CurrentBeatIndicator subscribe={beatPlayer.current.subscribe} />
-      <GridElement rowStart={6} colSpan={16}>
+      <GridElement className={style.playButton} skipStyling={true}>
         <button
           className={style.button}
           onClick={() => setIsPlaying(!isPlaying)}

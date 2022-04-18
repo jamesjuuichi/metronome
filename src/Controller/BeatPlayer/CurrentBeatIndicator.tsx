@@ -6,6 +6,7 @@ import GridElement from '../../GridElement';
 import type { Subscriber } from './beatPlayer';
 
 import style from './CurrentBeatIndicator.module.scss';
+import gridStyle from '../style.module.scss';
 
 type Props = {
   subscribe: (fn: Subscriber) => void;
@@ -22,12 +23,12 @@ export default function CurrentBeatIndicator({ subscribe }: Props) {
   }, []);
   return (
     <GridElement
-      rowStart={5}
-      colStart={beatIndex != null ? beatIndex + 1 : undefined}
       className={cx(
         beatIndex == null ? style.hidden : undefined,
-        style.centeredGridElement
+        style.centeredGridElement,
+        beatIndex == null ? undefined : gridStyle[`indicator${beatIndex + 1}`]
       )}
+      skipStyling={true}
     >
       <div
         className={cx(
