@@ -104,10 +104,20 @@ function useSliderInteraction(
       e.preventDefault();
       isMouseDown = true;
       getMousePosition(e);
+
+      window.addEventListener('mousemove', mouseMoveEvent);
+      window.addEventListener('touchmove', mouseMoveEvent);
+      window.addEventListener('touchend', mouseUpEvent);
+      window.addEventListener('mouseup', mouseUpEvent);
     }
     function mouseUpEvent(e: MouseEvent) {
       e.preventDefault();
       isMouseDown = false;
+
+      window.removeEventListener('mousemove', mouseMoveEvent);
+      window.removeEventListener('touchmove', mouseMoveEvent);
+      window.removeEventListener('touchend', mouseUpEvent);
+      window.removeEventListener('mouseup', mouseUpEvent);
     }
     function mouseMoveEvent(e: MouseEvent) {
       e.preventDefault();
@@ -119,18 +129,10 @@ function useSliderInteraction(
 
     currentRef.addEventListener('mousedown', mouseDownEvent);
     currentRef.addEventListener('touchstart', mouseDownEvent);
-    window.addEventListener('mousemove', mouseMoveEvent);
-    window.addEventListener('touchmove', mouseMoveEvent);
-    window.addEventListener('touchend', mouseUpEvent);
-    window.addEventListener('mouseup', mouseUpEvent);
 
     return () => {
       currentRef.removeEventListener('mousedown', mouseDownEvent);
       currentRef.removeEventListener('touchstart', mouseDownEvent);
-      window.removeEventListener('mousemove', mouseMoveEvent);
-      window.removeEventListener('touchmove', mouseMoveEvent);
-      window.removeEventListener('touchend', mouseUpEvent);
-      window.removeEventListener('mouseup', mouseUpEvent);
     };
   }, [min, max, orientation, reportValue]);
 

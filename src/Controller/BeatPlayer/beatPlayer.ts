@@ -26,6 +26,7 @@ export function createMetronome() {
   let beatCount: number | null = null;
   let pattern: number[] | null = null;
   let isValidMeasure = true;
+  let currentTimeouts: number[] = [];
   const subscribers: Set<Subscriber> = new Set<Subscriber>();
 
   function setBpm(newBpm: number) {
@@ -68,6 +69,7 @@ export function createMetronome() {
       return;
     }
     isPlaying = false;
+    clearAllPendingTimeout();
   }
 
   function scheduleNextMeasure() {
@@ -84,6 +86,7 @@ Beat: ${beatCount}
       isPlaying = false;
       return;
     }
+    currentTimeouts = [];
     scheduleBeatsInMeasure(bpm, beatCount, pattern);
   }
   function scheduleBeatsInMeasure(
@@ -95,10 +98,18 @@ Beat: ${beatCount}
     const pace = ONE_MINUTE / bpm;
 
     playSound(0, pattern?.[0]);
+
     for (let i = 1; i < beatCount; ++i) {
-      setTimeout(() => playSound(i, pattern?.[i]), pace * i);
+      currentTimeouts.push(
+        window.setTimeout(() => playSound(i, pattern?.[i]), pace * i)
+      );
     }
-    setTimeout(scheduleNextMeasure, pace * beatCount);
+    currentTimeouts.push(
+      window.setTimeout(scheduleNextMeasure, pace * beatCount)
+    );
+  }
+  function clearAllPendingTimeout() {
+    currentTimeouts.forEach((currentTimeout) => clearTimeout(currentTimeout));
   }
 
   function playSound(index: number, gain: number | undefined | null) {
