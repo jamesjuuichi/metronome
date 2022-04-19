@@ -4,6 +4,7 @@ import { createMessageQueue } from './messageQueue';
 import { randomRange } from '../randomRange';
 
 import style from './style.module.scss';
+import { usePortal } from '../usePortal';
 
 const SHOW_MESSAGE_CLICKING_THREADHOLD = 10;
 const CLICK_SAMPLING_TIME_FRAME = 10000;
@@ -16,13 +17,17 @@ export default function Background() {
     createMessageQueue()
   );
   const ref = useRef<HTMLDivElement>(null);
-  const messageRef = useRef<HTMLDivElement>(null);
+  const [containerRef, portal] = usePortal(
+    <div className={style.message}></div>
+  );
+
   useEffect(() => {
-    if (!ref.current || !messageRef.current) {
+    if (!ref.current || !containerRef.current?.children?.[0]) {
       return;
     }
     const currentRef = ref.current;
-    const currentMessageRef = messageRef.current;
+    const currentMessageRef = containerRef.current
+      .children[0] as HTMLDivElement;
 
     let isAnimating = false;
     function showHintMessage() {
@@ -73,7 +78,7 @@ export default function Background() {
   }, []);
   return (
     <div ref={ref} className={style.background}>
-      <div ref={messageRef} className={style.message}></div>
+      {portal}
     </div>
   );
 }
