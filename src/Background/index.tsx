@@ -6,7 +6,7 @@ import { randomRange } from '../randomRange';
 import style from './style.module.scss';
 import { usePortal } from '../usePortal';
 
-const SHOW_MESSAGE_CLICKING_THREADHOLD = 10;
+const SHOW_MESSAGE_CLICKING_THREADHOLD = 6;
 const CLICK_SAMPLING_TIME_FRAME = 10000;
 const MESSAGE_BOUNDARY_VERTICAL = 100;
 const MESSAGE_BOUNDARY_HORIZONTAL = 100;
