@@ -1,8 +1,10 @@
 const MESSAGES = [
   'It is a metronome! :)',
-  'The slider on the top left controls BPM.',
-  'The slider on the top right controls number of beats,',
+  'One of the two horizontal sliders controls BPM.',
+  'One horizontal slider controls number of beat.',
   'Vertial sliders controls the pitch and the loudness of each beat.',
+  'The dot under the beat slider indicates current playing beat.',
+  'If you change BPM / number of beat on the fly, next measure gets the effect.',
 ];
 
 export function createMessageQueue() {
